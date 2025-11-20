@@ -127,6 +127,7 @@ def main():
         print(Fore.YELLOW + "=== SELAMAT DATANG DI GO RENT ===" + Style.RESET_ALL)
         print("Sistem Penyewaan Kendaraan di Terminal")
         role = login()
+        # setelah login diperika role
         
         if role == "exit":
             clear_screen()
@@ -140,5 +141,4 @@ def main():
             print(Fore.RED + "Login gagal. Username atau password salah." + Style.RESET_ALL)
             input("Tekan Enter untuk mencoba lagi...")
 
-if __name__ == "__main__":
-    main()
+main()

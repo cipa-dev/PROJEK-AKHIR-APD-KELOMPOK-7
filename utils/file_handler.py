@@ -6,7 +6,7 @@ def read_csv(filename):
     try:
         if not os.path.exists(filename):
             return []
-        with open(filename, mode='r', newline='', encoding='utf-8') as file:
+        with open(file=filename, mode='r', newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             return list(reader)
     except FileNotFoundError:

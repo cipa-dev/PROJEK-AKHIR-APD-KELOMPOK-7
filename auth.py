@@ -24,7 +24,8 @@ def login():
         print(Fore.RED + "❌ Password tidak boleh kosong!" + Style.RESET_ALL)
         input("Tekan Enter...")
         return None
-
+    
+    # perbaiki Login nya
     if username == "admin" and password == "admin123":
         return "admin"
     elif username == "staff" and password == "staff123":
