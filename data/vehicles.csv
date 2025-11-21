@@ -1,6 +1,6 @@
 id,type,brand,model,plate,status
-1,motor,Honda,Beat,AB1234CD,available
-2,motor,Yamaha,NMAX,XY5678ZA,rented
+1,motor,Honda,Beat,AB1234CD,rented
+2,motor,Yamaha,NMAX,XY5678ZA,available
 3,mobil,Toyota,Avanza,B1234XYZ,available
 4,mobil,Suzuki,Ertiga,D5678ABC,available
 5,motor,Honda,PCX,E9012FGH,available

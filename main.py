@@ -2,7 +2,7 @@ import os
 from colorama import init, Fore, Style
 
 # Local modules
-from auth import login
+from auth import *
 from modules.vehicle_manager import list_vehicles, add_vehicle, update_vehicle, delete_vehicle, clear_screen
 from modules.customer_manager import list_customers, add_customer, update_customer, delete_customer
 from modules.transaction_manager import list_transactions, rent_vehicle, return_vehicle
