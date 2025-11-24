@@ -24,7 +24,7 @@ def add_vehicle():
     clear_screen()
     print(menu + "=== TAMBAH KENDARAAN ===")
     vehicles = read_csv(VEHICLE_FILE)
-    new_id = str(len(vehicles) + 1)
+    new_id = str(int(vehicles[-1]["id"]) + 1)
     v_type = input("Tipe kendaraan (motor/mobil): ").strip()
     brand = input("Merek: ").strip()
     model = input("Model: ").strip()

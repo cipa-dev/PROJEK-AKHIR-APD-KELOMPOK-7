@@ -18,7 +18,7 @@ def list_customers():
 
 def add_customer():
     customers = read_csv(CUSTOMER_FILE)
-    new_id = str(len(customers) + 1)
+    new_id = str(int(customers[-1]["id"]) + 1)
     name = input("Nama: ").strip()
     phone = input("Telepon: ").strip()
     license_no = input("Nomor SIM: ").strip()
