@@ -9,3 +9,4 @@ id,customer_id,vehicle_id,rent_date,return_date,status
 8,4,6,2025-11-07,2025-11-07,returned
 9,2,4,2025-11-08,2025-11-08,returned
 10,2,1,2025-11-20,,rented
+11,1,6,2025-11-24,,rented

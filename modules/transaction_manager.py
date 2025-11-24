@@ -34,9 +34,9 @@ def rent_vehicle():
         return
 
     v_table = PrettyTable()
-    v_table.field_names = ["ID", "Tipe", "Merek", "Plat"]
+    v_table.field_names = ["ID", "Tipe", "Merek", "Plat","Price"]
     for v in available:
-        v_table.add_row([v["id"], v["type"], v["brand"], v["plate"]])
+        v_table.add_row([v["id"], v["type"], v["brand"], v["plate"], v["price"]])
     print(v_table)
 
     vid = input("Pilih ID kendaraan: ").strip()
@@ -61,7 +61,7 @@ def rent_vehicle():
         if v["id"] == vid:
             v["status"] = "rented"
     from utils.file_handler import write_csv as write_csv_util
-    write_csv_util(VEHICLE_FILE, vehicles, ["id", "type", "brand", "model", "plate", "status"])
+    write_csv_util(VEHICLE_FILE, vehicles, ["id", "type", "brand", "model", "plate", "status","price"])
 
     transaction = {
         "id": new_id,
@@ -109,7 +109,7 @@ def return_vehicle():
             v["status"] = "available"
 
     write_csv("data/transactions.csv", transactions, TRANSACTION_FIELDS)
-    write_csv("data/vehicles.csv", vehicles, ["id", "type", "brand", "model", "plate", "status"])
+    write_csv("data/vehicles.csv", vehicles, ["id", "type", "brand", "model", "plate", "status", "price"])
     print(done + "Kendaraan berhasil dikembalikan!")
 
 # Aliases untuk reuse
