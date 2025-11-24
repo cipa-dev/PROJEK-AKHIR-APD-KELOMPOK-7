@@ -4,7 +4,7 @@ from utils.file_handler import read_csv, write_csv
 from utils.common import *
 
 VEHICLE_FILE = "data/vehicles.csv"
-VEHICLE_FIELDS = ["id", "type", "brand", "model", "plate", "status"]
+VEHICLE_FIELDS = ["id", "type", "brand", "model", "plate", "status", "price"]
 
 def clear_screen():
     os.system("cls || clear")
@@ -15,9 +15,9 @@ def list_vehicles():
         print(Warning + "Tidak ada kendaraan terdaftar.")
         return
     table = PrettyTable()
-    table.field_names = ["ID", "Tipe", "Merek", "Model", "Plat", "Status"]
+    table.field_names = ["ID", "Tipe", "Merek", "Model", "Plat", "Status", "Price"]
     for v in vehicles:
-        table.add_row([v["id"], v["type"], v["brand"], v["model"], v["plate"], v["status"]])
+        table.add_row([v["id"], v["type"], v["brand"], v["model"], v["plate"], v["status"], v["price"]])
     print(table)
 
 def add_vehicle():
@@ -29,12 +29,14 @@ def add_vehicle():
     brand = input("Merek: ").strip()
     model = input("Model: ").strip()
     plate = input("Nomor Plat: ").strip()
+    price = input("Harga Sewa: ").strip()
     vehicle = {
         "id": new_id,
         "type": v_type,
         "brand": brand,
         "model": model,
         "plate": plate,
+        "price": price,
         "status": "available"
     }
     vehicles.append(vehicle)
@@ -53,6 +55,7 @@ def update_vehicle():
             v["brand"] = input(f"Merek ({v['brand']}): ").strip() or v["brand"]
             v["model"] = input(f"Model ({v['model']}): ").strip() or v["model"]
             v["plate"] = input(f"Plat ({v['plate']}): ").strip() or v["plate"]
+            v["price"] = input(f"Plat ({v['price']}): ").strip() or v["price"]
             write_csv(VEHICLE_FILE, vehicles, VEHICLE_FIELDS)
             print(done + "\nKendaraan berhasil diperbarui!")
             return
