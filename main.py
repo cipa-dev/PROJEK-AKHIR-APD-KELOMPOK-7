@@ -1,6 +1,3 @@
-import os
-from colorama import init, Fore, Style
-
 # Local modules
 from auth import *
 from utils.common import *

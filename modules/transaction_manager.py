@@ -1,11 +1,11 @@
-import os
 from prettytable import PrettyTable
 from utils.file_handler import read_csv, write_csv
 from utils.common import *
-from datetime import datetime
+from datetime import datetime, timedelta
+from utils.hitung import hitung_hari_sewa, hitung_hari_telat, hitung_denda
 
 TRANSACTION_FILE = "data/transactions.csv"
-TRANSACTION_FIELDS = ["id", "customer_id", "vehicle_id", "rent_date", "return_date", "status"]  # status: rented/returned
+TRANSACTION_FIELDS = ["id", "customer_id", "vehicle_id", "rent_date", "return_date", "status", "price"]  # status: rented/returned
 VEHICLE_FILE = "data/vehicles.csv"
 CUSTOMER_FILE = "data/customers.csv"
 
@@ -77,7 +77,7 @@ def rent_vehicle():
 
 def return_vehicle():
     transactions = read_csv(TRANSACTION_FILE)
-    vehicles = read_csv("data/vehicles.csv")
+    vehicles = read_csv(VEHICLE_FILE)
 
     rented = [t for t in transactions if t["status"] == "rented"]
     if not rented:
@@ -97,21 +97,62 @@ def return_vehicle():
         print(warning + "Transaksi tidak ditemukan!")
         return
 
-    # Update transaksi
-    for t in transactions:
-        if t["id"] == tid:
-            t["return_date"] = datetime.now().strftime("%Y-%m-%d")
-            t["status"] = "returned"
+    return_date = input("Masukkan tanggal pengembalian (YYYY-MM-DD): ").strip()
+    try:
+        datetime.strptime(return_date, "%Y-%m-%d") 
+        rent_dt = datetime.strptime(selected["rent_date"], "%Y-%m-%d") 
+        max_sewa = 3 #hari
+        tgl_batasSewa = rent_dt + timedelta(days=max_sewa) 
+        tgl_batasSewa_str = tgl_batasSewa.strftime("%Y-%m-%d") 
+    except ValueError:
+        print(warning + "Format tanggal salah! Gunakan Format (YYYY-MM-DD)" + Style.RESET_ALL)
+        return
 
-    # Update kendaraan
+    hari_sewa = hitung_hari_sewa(selected["rent_date"], return_date) 
+    hari_telat = hitung_hari_telat(tgl_batasSewa_str, return_date) 
+    denda = hitung_denda(hari_telat)
+
+    kendaraan = next((v for v in vehicles if v["id"] == selected["vehicle_id"]), None)
+    if not kendaraan:
+        print(Fore.RED + "Data kendaraan tidak ditemukan!" + Style.RESET_ALL)
+        return
+    
+    price_per_hari = int(kendaraan["price"])
+    biaya_sewa = hari_sewa * price_per_hari
+    total = biaya_sewa + denda
+
+    # Struk
+    table = PrettyTable()
+    table.field_names = ["Rincian", "Detail"]
+    table.align = "l" 
+    table.add_row(["Tanggal Sewa", selected["rent_date"]])
+    table.add_row(["Tanggal Kembali", return_date])
+    table.add_row(["Batas Sewa (3 hari)", tgl_batasSewa_str])
+    table.add_row(["Harga / Hari", f"Rp {price_per_hari:,}"])
+    table.add_row(["Total Hari Sewa", f"{hari_sewa} hari"])
+    table.add_row(["Hari Telat Kembali", f"{hari_telat} hari"])
+    table.add_row(["Denda", f"Rp {denda:,}"])
+    table.add_row(["Biaya Sewa", f"Rp {biaya_sewa:,}"])
+    table.add_row(["TOTAL", f"Rp {total:,}"])
+    print(table)
+
+    # Update status kendaraan
     for v in vehicles:
         if v["id"] == selected["vehicle_id"]:
             v["status"] = "available"
 
-    write_csv("data/transactions.csv", transactions, TRANSACTION_FIELDS)
-    write_csv("data/vehicles.csv", vehicles, ["id", "type", "brand", "model", "plate", "status", "price"])
-    print(done + "Kendaraan berhasil dikembalikan!")
+    # Update transaksi
+    for t in transactions:
+        if t["id"] == tid:
+            t["return_date"] = return_date
+            t["status"] = "returned"
 
+    # Simpan ke CSV
+    write_csv(TRANSACTION_FILE, transactions, TRANSACTION_FIELDS)
+    write_csv(VEHICLE_FILE, vehicles, ["id", "type", "brand", "model", "plate", "status", "price"])
+
+    print(done + "Kendaraan berhasil dikembalikan!" + Style.RESET_ALL)
+    
 # Aliases untuk reuse
 def list_customers():
     from modules.customer_manager import list_customers as lc

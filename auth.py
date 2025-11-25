@@ -1,6 +1,4 @@
-import os
 from utils.common import *
-from colorama import Fore, Style
 from utils.file_handler import read_csv
 
 USER_FILE = "data/users.csv"

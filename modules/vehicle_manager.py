@@ -1,4 +1,3 @@
-import os
 from prettytable import PrettyTable
 from utils.file_handler import read_csv, write_csv
 from utils.common import *
@@ -12,7 +11,7 @@ def clear_screen():
 def list_vehicles():
     vehicles = read_csv(VEHICLE_FILE)
     if not vehicles:
-        print(Warning + "Tidak ada kendaraan terdaftar.")
+        print(warning + "Tidak ada kendaraan terdaftar.")
         return
     table = PrettyTable()
     table.field_names = ["ID", "Tipe", "Merek", "Model", "Plat", "Status", "Price"]

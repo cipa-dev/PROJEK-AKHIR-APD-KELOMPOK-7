@@ -1,6 +1,7 @@
 import os
 from colorama import *
 init(autoreset=True)
+
 def clear_screen():
     os.system("cls || clear")
 
