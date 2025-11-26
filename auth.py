@@ -1,16 +1,14 @@
 from utils.common import *
-from utils.file_handler import read_csv
+from utils.file_handler import read_csv,write_csv
 
 USER_FILE = "data/users.csv"
+USER_FIELD = ["id", "username", "password", "role"]
 
 def login():
     clear_screen()
     print(info + "\n=== Go Rent - Login ===")
-    print(exit + "Ketik 'exit' sebagai username untuk keluar.\n")
     
     username = input("Username: ").strip()
-    if username.lower() == "exit":
-        return "exit"
     
     if not username:
         print(warning + "❌ Username tidak boleh kosong!")
@@ -32,3 +30,26 @@ def login():
                 return user["role"]
             else:
                 print(warning + "login gagal")
+
+def register():
+    nama = input("masukkan username: ").strip()
+    pw = input("masukkan password: ").strip()
+    if not nama:
+        print(warning + "Username Tidak Boleh Kosong!")
+        input("Tekan Enter...")
+        return
+    if not pw:
+        print("Password Tidak Boleh Kosong!")
+        input("Tekan Enter...")
+        return
+    users = read_csv("data/users.csv")
+    newusers = {
+        "id": str(int(users[-1]["id"]) + 1),
+        "username": nama, 
+        "password": pw,
+        "role": "staff"
+        }
+    users.append(newusers)
+    write_csv(USER_FILE, users, USER_FIELD )
+    print(done + "Akun Berhasil Dibuat!")
+    input("Tekan Enter...")

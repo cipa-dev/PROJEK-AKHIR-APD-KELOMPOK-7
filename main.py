@@ -4,6 +4,7 @@ from utils.common import *
 from modules.vehicle_manager import list_vehicles, add_vehicle, update_vehicle, delete_vehicle, clear_screen
 from modules.customer_manager import list_customers, add_customer, update_customer, delete_customer
 from modules.transaction_manager import list_transactions, rent_vehicle, return_vehicle
+import questionary
 
 # Inisialisasi Colorama
 init(autoreset=True)
@@ -121,19 +122,25 @@ def main():
         clear_screen()
         print(exit + "=== SELAMAT DATANG DI GO RENT ===")
         print("Sistem Penyewaan Kendaraan di Terminal")
-        role = login()
+
+        pilihan = questionary.select(
+            "pilihan: ",
+        choices= ["login", "register", "exit"]
+        ).ask()
         
-        if role == "exit":
-            clear_screen()
-            print(done + "Terima kasih telah menggunakan Go Rent. Sampai jumpa!\n")
+        if pilihan == "login": 
+            print("menu login")
+            role = login()
+            if role == "admin":
+                admin_menu()
+            elif role == "staff":
+                staff_menu()
+            else:
+                print("kamu bukan siapa siapa")
+        elif pilihan == "register":
+            register()
+        elif pilihan == "exit":
             break
-        elif role == "admin":
-            admin_menu()
-        elif role == "staff":
-            staff_menu()
-        else:
-            print(warning + "Login gagal. Username atau password salah.")
-            input("Tekan Enter untuk mencoba lagi...")
 
 if __name__ == "__main__":
     main()

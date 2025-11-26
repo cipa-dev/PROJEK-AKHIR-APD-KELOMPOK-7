@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 from utils.file_handler import read_csv, write_csv
 from utils.common import *
+import questionary
 
 VEHICLE_FILE = "data/vehicles.csv"
 VEHICLE_FIELDS = ["id", "type", "brand", "model", "plate", "status", "price"]
@@ -24,7 +25,10 @@ def add_vehicle():
     print(menu + "=== TAMBAH KENDARAAN ===")
     vehicles = read_csv(VEHICLE_FILE)
     new_id = str(int(vehicles[-1]["id"]) + 1)
-    v_type = input("Tipe kendaraan (motor/mobil): ").strip()
+    v_type = questionary.select(
+        "Tipe kendaraan: ",
+        choices=["motor","mobil"]
+    ).ask()
     brand = input("Merek: ").strip()
     model = input("Model: ").strip()
     plate = input("Nomor Plat: ").strip()

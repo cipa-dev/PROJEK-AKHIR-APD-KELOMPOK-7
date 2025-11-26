@@ -1,6 +1,7 @@
 import csv
 import os
 from colorama import Fore, Style
+from utils.common import*
 
 def read_csv(filename):
     try:
@@ -10,10 +11,10 @@ def read_csv(filename):
             reader = csv.DictReader(file)
             return list(reader)
     except FileNotFoundError:
-        print(Fore.RED + f"File {filename} tidak ditemukan!" + Style.RESET_ALL)
+        print(warning + f"File {filename} tidak ditemukan!")
         return []
     except Exception as e:
-        print(Fore.RED + f"Error membaca file: {e}" + Style.RESET_ALL)
+        print(warning + f"Error membaca file: {e}")
         return []
 
 def write_csv(filename, data, fieldnames):

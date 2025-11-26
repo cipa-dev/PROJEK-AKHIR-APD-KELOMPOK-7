@@ -14,3 +14,6 @@ id,type,brand,model,plate,status,price
 13,mobil,Honda,Mobilio,N3345PQX,available,50000
 14,motor,Kawasaki,Ninja,BB5512HG,available,60000
 15,mobil,Tesla,Model 3,BY2234ZZ,rented,150000
+16,mobil,wuling,bingo,KT2121S,available,100000
+17,motor,honda,genio,KT2878RCL,available,50000
+18,mobil,Honda,TX980,KT#$%,available,90000
