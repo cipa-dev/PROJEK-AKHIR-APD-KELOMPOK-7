@@ -1,7 +1,7 @@
 from utils.common import *
 from utils.file_handler import read_csv,write_csv
 
-USER_FILE = "data/users.csv"
+USER_FILE = "../data/users.csv"
 USER_FIELD = ["id", "username", "password", "role"]
 
 def login():
@@ -42,7 +42,7 @@ def register():
         print("Password Tidak Boleh Kosong!")
         input("Tekan Enter...")
         return
-    users = read_csv("data/users.csv")
+    users = read_csv("../data/users.csv")
 
     for user in users:
         if username == user["username"]:
