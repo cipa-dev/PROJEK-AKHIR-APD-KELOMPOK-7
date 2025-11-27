@@ -97,16 +97,7 @@ def return_vehicle():
         print(warning + "Transaksi tidak ditemukan!")
         return
 
-    return_date = input("Masukkan tanggal pengembalian (YYYY-MM-DD): ").strip()
-    try:
-        datetime.strptime(return_date, "%Y-%m-%d") 
-        rent_dt = datetime.strptime(selected["rent_date"], "%Y-%m-%d") 
-        max_sewa = 3 #hari
-        tgl_batasSewa = rent_dt + timedelta(days=max_sewa) 
-        tgl_batasSewa_str = tgl_batasSewa.strftime("%Y-%m-%d") 
-    except ValueError:
-        print(warning + "Format tanggal salah! Gunakan Format (YYYY-MM-DD)" + Style.RESET_ALL)
-        return
+    
 
     hari_sewa = hitung_hari_sewa(selected["rent_date"], return_date) 
     hari_telat = hitung_hari_telat(tgl_batasSewa_str, return_date) 
